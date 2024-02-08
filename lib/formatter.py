@@ -28,4 +28,18 @@ class FileFormatter:
 
 
 
+class DirFormatter:
+    def __init__(self, path):
+        self.path = path
+
+
+    def format(self):
+        filenames = os.listdir(self.path)
+
+        for filename in filenames:
+            file_path = os.path.join(self.path, filename)
+
+            formatter = FileFormatter(path=file_path)
+            formatter.format()
+        
 
