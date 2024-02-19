@@ -13,7 +13,6 @@ def get_tag_range(html_lines, start_index):
     tag_name = get_tagname_from(line=html_lines[start_index])
     start_tag = "<" + tag_name  + ">"
     end_tag = "</" + tag_name + ">"
-    print(start_tag)
 
     current_index = start_index + 1 
     ignore_end_tag = 0
@@ -23,16 +22,17 @@ def get_tag_range(html_lines, start_index):
         line = line.strip()
 
 
-        if start_tag == line:
-            ignore_end_tag += 1
+        if ("<" + tag_name ) in line:
+            tag = "<" + get_tagname_from(line=line) + ">"
+
+            if start_tag == tag:
+                ignore_end_tag += 1
 
         elif end_tag == line:
             if ignore_end_tag > 0:
-                print("Ignoring end tag")
                 ignore_end_tag -= 1
             else:
                 return current_index
-
 
         current_index += 1
 
