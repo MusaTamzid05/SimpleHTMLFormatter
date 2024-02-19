@@ -1,11 +1,31 @@
 import argparse
 from lib.formatter import FileFormatter
 from lib.formatter import DirFormatter
+from lib.formatter import IndentSpacer
 import os
 
 def get_tagname_from(line):
     tag_name = line.strip().strip("<").strip(">").split()[0]
     return tag_name
+
+def is_start_tag(line):
+    flag = True
+
+    if "<" not in line:
+        flag = False
+        return flag
+
+    if "/>" in line:
+        flag = False
+        return flag
+
+    if "</" in line:
+        flag = False
+        return flag
+
+
+
+    return flag
 
 
 
@@ -59,7 +79,56 @@ def main():
 
 if __name__ == "__main__":
     start_index = 1
-    with open("test.html") as f:
+    with open("unformatted_html/one.html") as f:
         lines = f.readlines()
-        end_index = get_tag_range(html_lines=lines, start_index=start_index)
-        print("".join(lines[start_index:end_index + 1]))
+        spacer = IndentSpacer(lines=lines)
+        new_html = spacer.add_indent()
+        print(new_html)
+
+        '''
+        line_index = 0
+
+        while line_index < len(lines):
+            if is_start_tag(line=lines[line_index]) == False:
+                line_index += 1
+                continue
+
+            line = lines[line_index].strip()
+            tagname = get_tagname_from(line=line)
+
+            if len(tagname) == 1:
+                line_index += 1
+                continue
+            
+            end_index  = get_tag_range(html_lines=lines,start_index=line_index)
+
+            if end_index is None:
+                line_index += 1
+                continue
+
+            for j_index in range(line_index, end_index + 1):
+                lines[j_index] = "   " + lines[j_index]
+
+            line_index += 1
+
+
+        print("".join(lines))
+
+
+        #end_index = get_tag_range(html_lines=lines, start_index=start_index)
+        #print("".join(lines[start_index:end_index + 1]))
+        '''
+
+
+
+
+
+
+
+
+
+
+
+
+
+
