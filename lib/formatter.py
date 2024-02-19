@@ -9,9 +9,10 @@ class IndentSpacer:
             start_index += 1
 
 
-        self.start_line = lines[start_index + 1]
+
+        self.start_line = lines[start_index]
         self.end_line = lines[len(lines) - 1]
-        self.lines = lines[start_index:len(lines) - 1]
+        self.lines = lines[start_index + 1:len(lines) - 1]
         self.spaces = spaces
 
 
@@ -117,10 +118,19 @@ class FileFormatter:
         soup = BeautifulSoup(text, "html5lib")
         new_html = soup.prettify()
 
+        lines = new_html.split()
+        lines = [line + "\n" for line in lines]
+
+        spacer = IndentSpacer(lines=lines)
+        new_html = spacer.add_indent()
+
         os.remove(self.path)
+
 
         with open(self.path, "w") as f:
             f.write(new_html)
+
+
 
         print(f"{self.path} formatted")
 
