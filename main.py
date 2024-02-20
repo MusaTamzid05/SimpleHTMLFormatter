@@ -79,3 +79,14 @@ def main():
 
 if __name__ == "__main__":
     main()
+    '''
+    with open("test.html") as f:
+        lines = f.readlines()
+        indenter = IndentSpacer(lines=lines)
+        new_html = indenter.add_indent()
+        print(new_html)
+    '''
+
+
+
+

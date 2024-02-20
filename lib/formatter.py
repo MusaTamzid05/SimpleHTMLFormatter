@@ -118,8 +118,9 @@ class FileFormatter:
         soup = BeautifulSoup(text, "html5lib")
         new_html = soup.prettify()
 
-        lines = new_html.split()
+        lines = new_html.split("\n")
         lines = [line + "\n" for line in lines]
+
 
         spacer = IndentSpacer(lines=lines)
         new_html = spacer.add_indent()
